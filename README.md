@@ -1,12 +1,12 @@
 #jnpm-generator
 Is a simple npm project generator
 
-- run `npm init`
 - Install selected npm dependencies
-- Automatically add remote git repo
+- create README.md and add some initial content
+- Automatically add remote git repo as `origin`
 - Automatically add `node_modules/*` to `.gitignore`
-- Automatically allow `git push` to push `master` branch into `origin`
-- do initial push to `origin` as `git push origin master`
+- run `git add -A ./*` and `git commit -a -m "initial"`
+- run `git push origin master`
 
 ##usage
 ```bash
@@ -27,5 +27,6 @@ Directory Structure
 |	+--	config
 |	+-- *otherGitStuff*
 +-- index.js
++-- README.md
 ```
 

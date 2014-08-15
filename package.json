@@ -4,7 +4,7 @@
   "description": "simple npm project generator",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "./test"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,12 @@
   "bugs": {
     "url": "https://github.com/juji/jnpm-generator/issues"
   },
-  "homepage": "https://github.com/juji/jnpm-generator"
+  "homepage": "https://github.com/juji/jnpm-generator",
+  "devDependencies": {
+    "async-q": "^0.2.2",
+    "child-process-promise": "^0.2.0-SNAPSHOT.1389671754086",
+    "inquirer": "^0.6.0",
+    "q": "^1.0.1",
+    "q-io": "^1.11.4"
+  }
 }
