@@ -5,55 +5,60 @@ var q = require('q');
 var nfs = require('fs');
 var async = require('async-q');
 
-var pack = require('./package.json');
+
+if(!nfs.existsSync('./package.json')){
+	console.log('ERROR: you should run npm init before doing this..');
+	process.exit(1);
+}	
+
+var cdir = process.cwd();
+var pack = require(cdir+'/package.json');
 
 (function(){
 
 	var d = q.defer();
 
+	console.log('NOTE: you should run npm init before doing this..')
+
 	inquirer.prompt( [
 
 		{
 			name: 'npmpack',
-			message	: 'Select npm package to install:',
+			message	: 'Select npm package(s) to install:',
 			type: 'checkbox',
 			choices : [
 				'express', 'grunt', 'bower', 
-				new inquirer.Separator(),
-				'async','q', 'q-io', 'async-q',
-				new inquirer.Separator(),
-				'mysql','redis','memcached', 'sqlite3', 'mongodb',
-				new inquirer.Separator(),
-				'mocha', 'chai', 'mocha-as-promise', 'chai-as-promise', 
-				new inquirer.Separator(),
+				'async','q', 'q-io', 'async-q', 'child-process-promise',
+				'redis','memcached', 'sqlite3', 'mongodb',
+				'mocha', 'chai', 'mocha-as-promised', 'chai-as-promised', 
 				'cheerio','underscore', 'lodash',
-				new inquirer.Separator(), 
 				'jade', 'dot', 'ejs', 'handlebars',
-				new inquirer.Separator(), 
 				'jhttp-client', 'simple-cookie',
-				new inquirer.Separator(), 
 				'mime', 'random-ua', 'encoding'
 			]
 		}
 
 	], function(ans){
 
-		q.resolve(ans.npmpack);
+		d.resolve(ans.npmpack);
 
 	});
 
 
-	return q.promise;
+	return d.promise;
 
 })()
 .then(function(installs){
 
 	var functions = [];
 	for(var i in installs){
-		functions.push(function(c){
-			console.log('Installing '+installs[i]);
-			return exec('npm install '+installs[i]+' --save-dev');
-		});
+		(function(){
+			var num = i;
+			functions.push(function(c){
+				console.log('npm install '+installs[num]+' --save-dev');
+				return exec('npm install '+installs[num]+' --save-dev');
+			});
+		})();
 	}
 
 	return async.series(functions);
@@ -81,24 +86,69 @@ var pack = require('./package.json');
 .then(function(){
 
 	if( pack.repository.type == 'git' ){
+		
+		console.log('setting-up git');
 
-		console.log('Creating initial git repo');
-		return exec('git init')
-		.then(function(){
+		return fs.exists(cdir+'/.git')
+		.then(function(exists){
+			if(exists) return true;
+			throw new Error();
+		})
+		.fail(function(){
+			console.log('Creating initial git repo');
+			return exec('git init')
+			.then(function(res){
+				console.log(res.stdout);
+				return true;
+			});
+		})
+		.then(function(res){
+			return exec('git remote show');
+		})
+		.then(function(res){
+			if(/origin/m.test(res.stdout)) return true;
+			return false;
+		})
+		.then(function(origin){
+			if(origin) return true;
 			console.log("Adding remote git as 'origin'");
-			return exec('git remote add origin '+pack.repository.url);
+			return exec('git remote add origin '+pack.repository.url)
+			.then(function(res){
+				console.log(res.stdout);
+				return true;
+			});
+		})
+		.then(function(res){
+			return fs.exists('.gitignore')
+			.then(function(exists){
+				if(!exists) return true;
+				console.log("Writing .gitignore");
+				return fs.append('.gitignore','\nnode_modules/*');
+			})
+			.fail(function(){
+				console.log("Writing .gitignore");
+				return fs.write('.gitignore','node_modules/*');
+			})
 		})
 		.then(function(){
-			console.log("Writing .gitignore");
-			return fs.write('.gitignore', 'node_modules/*');
+			return exec('git rm -r ./node_modules/* --cached');
 		})
-		.then(function(){
+		.then(function(res){
+			console.log(res.stdout);
 			console.log("Run inital commit");
 			return exec('git add -A ./* && git commit -a -m "initial"');
-		}).then(function(){
+		}).then(function(res){
+			console.log(res.stdout);
 			console.log("Run inital push to 'origin'");
-			return exec('git push origin master');
-		}).then(function(){
+			return exec('git push origin master')
+			.fail(function(res){
+				return exec('git pull origin master');
+			})
+			.then(function(res){
+				return exec('git push origin master');
+			});
+		}).then(function(res){
+			console.log(res.stdout);
 			console.log('DONE!');
 		});
 
