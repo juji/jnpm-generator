@@ -1,0 +1,24 @@
+{
+  "name": "jnpm-generator",
+  "version": "0.0.0",
+  "description": "simple npm project generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:juji/jnpm-generator.git"
+  },
+  "keywords": [
+    "npm",
+    "project",
+    "generator"
+  ],
+  "author": "juji <jujiyangasli@gmail.com> (http://jujiyangasli.com/)",
+  "license": "Apache2",
+  "bugs": {
+    "url": "https://github.com/juji/jnpm-generator/issues"
+  },
+  "homepage": "https://github.com/juji/jnpm-generator"
+}
