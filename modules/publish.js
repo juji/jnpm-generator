@@ -1,7 +1,7 @@
 var exec = require('shelljs').exec;
 var test = require('shelljs').test;
 var to = require('shelljs').to;
-
+var path = require('path');
 var inquirer = require("inquirer");
 
 var cdir = process.cwd();

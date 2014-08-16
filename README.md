@@ -23,7 +23,7 @@ jnpm init
 # do initial commit and push.
 ```
 
-Publising to NPM?
+###Publising to NPM?
 ```bash
 jnpm publish # or
 jnpm publish "commit message"
