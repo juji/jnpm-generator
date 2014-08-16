@@ -9,13 +9,17 @@ function printHelp(){
 	console.log('	 jnpm init');
 	console.log('		 Will initialize git and dir structure');
 	console.log('');
+	console.log('	 jnpm publish');
+	console.log('	 	 Will incerement version number, perform jnpm push, and publish to NPM');
+	console.log('');
+	console.log('');
 	console.log('	 jnpm commit');
 	console.log('	 	 Will add and commit git');
 	console.log('');
 	console.log('	 jnpm push');
 	console.log('	 jnpm push "commit message"');
 	console.log('');
-	console.log("		 Will add, commit, and push to 'origin'");
+	console.log("		 Will add, commit, and push to 'origin' repo");
 	console.log('');
 	console.log('	 jnpm tracked');
 	console.log("		 Will list all tracked files");
@@ -56,6 +60,12 @@ if(process.argv.length==2 || process.argv[2]=='init'){
 	global.COMMITMSSG = "auto-commit";
 	if(typeof process.argv[3] != 'undefined') global.COMMITMSSG = process.argv[3];
 	require('./modules/push.js');
+
+}else if(process.argv[2]=='publish'){
+
+	global.COMMITMSSG = "auto-commit";
+	if(typeof process.argv[3] != 'undefined') global.COMMITMSSG = process.argv[3];
+	require('./modules/publish.js');
 
 }else if(process.argv[2]=='tracked'){
 

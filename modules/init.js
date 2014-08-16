@@ -13,7 +13,6 @@ var packFile = path.resolve(cdir+'/package.json');
 var userans = {};
 
 if( !test('-f', packFile) ){
-
 	console.log('ERROR: you should run npm init before doing this..');
 	process.exit(1);
 }	
@@ -164,7 +163,7 @@ if( test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 	console.log('preparing environment for cli command');
 	console.log(' ');
 
-	JSON.stringify( pack ).to( packFile );
+	JSON.stringify( pack, null, 2 ).to( packFile );
 
 	if(
 		(test('-f', userans.cliScript) && userans.cliScript == pack.main) || 

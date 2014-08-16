@@ -23,6 +23,18 @@ jnpm init
 # do initial commit and push.
 ```
 
+Publising to NPM?
+```bash
+jnpm publish # or
+jnpm publish "commit message"
+
+# increment version number in package.json
+# git add .
+# git commit -am "your message"
+# git push
+# npm publish
+```
+
 the rest of the commands, you can actually do with [jgit](https://www.npmjs.org/package/jgit-laziness)
 
 ### add and commit
