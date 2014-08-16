@@ -1,6 +1,6 @@
 {
   "name": "jnpm-generator",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "simple npm project generator utils",
   "main": "index.js",
   "scripts": {},
