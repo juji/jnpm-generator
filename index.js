@@ -29,10 +29,10 @@ var pack = require(cdir+'/package.json');
 			message	: 'Select npm package(s) to install:',
 			type: 'checkbox',
 			choices : [
+				'mocha', 'chai', 'mocha-as-promised', 'chai-as-promised', 
 				'express', 'grunt', 'bower', 
 				'async','q', 'q-io', 'async-q', 'child-process-promise',
 				'redis','memcached', 'sqlite3', 'mongodb',
-				'mocha', 'chai', 'mocha-as-promised', 'chai-as-promised', 
 				'cheerio','underscore', 'lodash',
 				'jade', 'dot', 'ejs', 'handlebars',
 				'jhttp-client', 'simple-cookie',
@@ -56,10 +56,19 @@ var pack = require(cdir+'/package.json');
 	for(var i in installs){
 		(function(){
 			var num = i;
-			functions.push(function(c){
-				console.log('npm install '+installs[num]+' --save-dev');
-				return exec('npm install '+installs[num]+' --save-dev');
-			});
+			var t = ['mocha', 'chai', 'mocha-as-promised', 'chai-as-promised'];
+			if(t.indexOf(installs[num]) < 0){
+				functions.push(function(c){
+					console.log('npm install '+installs[num]+' --save');
+					return exec('npm install '+installs[num]+' --save');
+				});		
+			}else{
+				functions.push(function(c){
+					console.log('npm install '+installs[num]+' --save-dev');
+					return exec('npm install '+installs[num]+' --save-dev');
+				});		
+			}
+			
 		})();
 	}
 
@@ -122,17 +131,20 @@ var pack = require(cdir+'/package.json');
 			.then(function(exists){
 				console.log("Writing .gitignore");
 				if(!exists) {
-					return fs.write('.gitignore','node_modules/*\nterminal.glue');
+					return fs.write('.gitignore','node_modules/*\nterminal.glue')
+					.then(function(){
+						return exec('git rm -r ./node_modules/* --cached --ignore-unmatch');
+					})
+					.then(function(){
+						return exec('git rm -r ./terminal.glue --cached --ignore-unmatch');
+					});
 				}
 				return true;
 			})
 		})
-		.then(function(){
-			return exec('git rm -r ./node_modules/* --cached && git rm -r ./terminal.glue --cached');
-		})
 		.then(function(res){
 			console.log("Run inital commit");
-			return exec('git add -A ./* && git commit -a -m "initial"');
+			return exec('git add -A ./* --ignore-errors && git commit -a -m "initial"');
 		}).then(function(res){
 			console.log(res.stdout);
 			console.log("Run inital push to 'origin'");
