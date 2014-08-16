@@ -1,4 +1,4 @@
-#!/usr/local/bin/node
+#! /usr/bin/env node
 
 var inquirer = require("inquirer");
 var exec = require('child-process-promise').exec;
