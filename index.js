@@ -1,3 +1,5 @@
+#!/usr/local/bin/node
+
 var inquirer = require("inquirer");
 var exec = require('child-process-promise').exec;
 var fs = require('q-io/fs');
