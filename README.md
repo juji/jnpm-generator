@@ -2,38 +2,47 @@
 #jnpm-generator
 Is a simple npm project generator. Just a lazy way to start npm project.
 
-- Install selected npm dependencies
-- create README.md and add some initial content
-- Automatically add remote git repo as `origin`
-- Automatically add `node_modules/*` to `.gitignore`
-- run `git add -A ./*` and `git commit -a -m "initial"`
-- run `git push origin master`
+##For CLI or module projects
+- Install your selected npm dependencies
+- create your "main" js file
+- create README.md with initial content
+- Automatically initialize git, and add remote 'origin' read from package.json
+- Do initial commit and push
 
 ##usage
 ```bash
-jnpm
-
+jnpm  # or 
 jnpm init
+
+# install npm modules
+# create "main" script read from package.json
+# create README.md
+# initialize git
+# add new 'origin' read from package.json
+# create .gitignore file with "node_modules/*"
+# do initial commit and push.
 ```
 
-##saving to git repo
+### add and commit
 ```bash
-jnpm save
-```
-it does this:
-```bash
-git add -A ./* && git commit -a -m "Sat Aug 16 2014 14:45:41 GMT+0700 (WIB)"
+jnpm commit  # or
+jnpm commit "commit message"
+
+# git add .
+# git commit -am "your message"
 ```
 
+### add, commit and push
 ```bash
-jnpm save "commit message"
-```
-for
-```bash
-git add -A ./* && git commit -a -m "commit message"
+jnpm push  # or
+jnpm push "commit message"
+
+# git add .
+# git commit -am "your message"
+# git push
 ```
 
-##view the help content
+### view help
 ```bash
 jnpm help
 ```
