@@ -9,6 +9,9 @@ function printHelp(){
 	console.log('	 jnpm init');
 	console.log('		 Will initialize git and dir structure');
 	console.log('');
+	console.log('	 jnpm commit');
+	console.log('	 	 Will add and commit');
+	console.log('');
 	console.log('	 jnpm push');
 	console.log('	 jnpm push "commit message"');
 	console.log('');
@@ -30,11 +33,17 @@ if(process.argv.length==2 || process.argv[2]=='init'){
 
 	require('./modules/init.js');
 
-}else if(process.argv[2]=='save'){
+}else if(process.argv[2]=='commit'){
 
 	global.COMMITMSSG = (new Date()).toString();
 	if(typeof process.argv[3] != 'undefined') global.COMMITMSSG = process.argv[3];
-	require('./modules/save.js');
+	require('./modules/commit.js');
+
+}else if(process.argv[2]=='push'){
+
+	global.COMMITMSSG = (new Date()).toString();
+	if(typeof process.argv[3] != 'undefined') global.COMMITMSSG = process.argv[3];
+	require('./modules/push.js');
 
 }else if(process.argv[2]=='tracked'){
 

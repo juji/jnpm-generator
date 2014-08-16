@@ -33,6 +33,10 @@ for
 git add -A ./* && git commit -a -m "commit message"
 ```
 
+##view the help content
+```bash
+jnpm help
+```
 
 
 ##install
