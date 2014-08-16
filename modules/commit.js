@@ -5,7 +5,7 @@ if(exec('git add .').code) {
 	process.exit();
 }
 
-if( exec('git -a -m "'+global.COMMITMSSG.replace(/"/,'\"')+'"').code ){
+if( exec('git commit -a -m "'+global.COMMITMSSG.replace(/"/,'\"')+'"').code ){
 
 	console.log('ERROR: Git commit failed');	
 	process.exit();
