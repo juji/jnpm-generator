@@ -39,9 +39,9 @@ if( test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 			type: 'checkbox',
 			choices : [
 				'mocha', 'chai', 'mocha-as-promised', 'chai-as-promised', 
-				'express', 'grunt', 'bower', 'shelljs',
+				'grunt', 'bower', 'shelljs', 'chalk', 'commander', 
 				'async','q', 'q-io', 'async-q', 'child-process-promise',
-				'redis','memcached', 'sqlite3', 'mongodb',
+				'express', 'redis','memcached', 'sqlite3', 'mongodb',
 				'cheerio','underscore', 'lodash',
 				'jade', 'dot', 'ejs', 'handlebars',
 				'jhttp-client', 'simple-cookie',
