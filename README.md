@@ -1,4 +1,3 @@
-##NOT READY!!
 
 #jnpm-generator
 Is a simple npm project generator. Just a lazy way to start npm project.
@@ -23,7 +22,7 @@ jnpm save
 ```
 it does this:
 ```bash
-git add -A ./* && git commit -a -m "saved"
+git add -A ./* && git commit -a -m "Sat Aug 16 2014 14:45:41 GMT+0700 (WIB)"
 ```
 
 ```bash
