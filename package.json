@@ -4,7 +4,7 @@
   "description": "simple npm project generator",
   "main": "index.js",
   "scripts": {
-    "test": ""
+    "install": "npm install"
   },
   "repository": {
     "type": "git",

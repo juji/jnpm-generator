@@ -1,3 +1,5 @@
+##NOT READY!!
+
 #jnpm-generator
 Is a simple npm project generator. Just a lazy way to start npm project.
 
