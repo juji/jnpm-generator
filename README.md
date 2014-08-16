@@ -23,6 +23,8 @@ jnpm init
 # do initial commit and push.
 ```
 
+the rest of the commands, you can actually do with [jgit](https://www.npmjs.org/package/jgit-laziness)
+
 ### add and commit
 ```bash
 jnpm commit  # or
