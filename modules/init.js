@@ -150,7 +150,7 @@ var pack = require(cdir+'/package.json');
 		})
 		.then(function(res){
 			console.log("Run inital commit");
-			return exec('git add ./* --ignore-errors')
+			return exec('git add .')
 			.then(function(){
 				return exec('git commit -a -m "initial"');
 			})

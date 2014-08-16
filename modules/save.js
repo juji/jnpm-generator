@@ -4,7 +4,7 @@ var q = require('q');
 var nfs = require('fs');
 var async = require('async-q');
 
-	exec('git add ./*')
+	exec('git add .')
 
 .then(function(){
 
@@ -13,5 +13,5 @@ var async = require('async-q');
 .then(function(){
 
 	return exec('git push'); 
-	
+
 });
