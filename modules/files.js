@@ -1,8 +1,6 @@
-var exec = require('child-process-promise').exec;
+var exec = require('shelljs').exec;
 
-exec('git ls-files')
-.then(function(res){
-
-	console.log(res.stdout);
-
-});
+if(exec('git ls-files').code) {
+	console.log('ERROR: Git ls-files failed');
+	process.exit();
+};

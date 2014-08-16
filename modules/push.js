@@ -1,17 +1,8 @@
-var exec = require('child-process-promise').exec;
+var exec = require('shelljs').exec;
 
-	exec('git add .')
+require('./commit.js');
 
-.then(function(res){
-
-	console.log(res.stdout);
-	return exec('git -a -m "'+global.COMMITMSSG.replace(/"/,'\"')+'"'); })
-
-.then(function(res){
-
-	console.log(res.stdout);
-	return exec('git push'); 
-
-}).then(function(res){
-	console.log(res.stdout);
-});
+if(exec('git push').code) {
+	console.log('ERROR: Git push failed');
+	process.exit();
+}

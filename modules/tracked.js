@@ -1,8 +1,5 @@
-var exec = require('child-process-promise').exec;
+var exec = require('shelljs').exec;
 
-exec('git ls-tree -r --full-tree HEAD')
-.then(function(res){
-
-	console.log(res.stdout);
-
-});
+if( exec('git ls-tree -r --full-tree HEAD').code ){
+	console.log('ERROR: git ls-tree failed');
+}

@@ -29,19 +29,31 @@ function printHelp(){
 	process.exit();
 }
 
+var shell = require('shelljs');
+
+if(!shell.which('git')){
+	console.log('jnpm requires git');
+	process.exit();
+}
+
+if(!shell.which('npm')){
+	console.log('jnpm requires npm');
+	process.exit();
+}
+
 if(process.argv.length==2 || process.argv[2]=='init'){
 
 	require('./modules/init.js');
 
 }else if(process.argv[2]=='commit'){
 
-	global.COMMITMSSG = (new Date()).toString();
+	global.COMMITMSSG = "auto-commit";
 	if(typeof process.argv[3] != 'undefined') global.COMMITMSSG = process.argv[3];
 	require('./modules/commit.js');
 
 }else if(process.argv[2]=='push'){
 
-	global.COMMITMSSG = (new Date()).toString();
+	global.COMMITMSSG = "auto-commit";
 	if(typeof process.argv[3] != 'undefined') global.COMMITMSSG = process.argv[3];
 	require('./modules/push.js');
 
