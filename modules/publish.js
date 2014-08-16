@@ -56,21 +56,13 @@ if( !test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 		process.exit(1);	
 	}
 
-	if( JSON.stringify( pack, null, 2).to(packFile) ) {
+	console.log('Version NUmber is inceremented');
 
-		console.log('Version NUmber is inceremented');
-		
-		require('./push.js');
+	require('./push.js');
 
-		if(exec( 'npm publish' ).code) {
-			console.log('ERROR, npm publish failed');	
-			process.exit(1);	
-		}
-
-	}else{
-	
-		console.log('ERROR, try to do it manually');	
-		process.exit(1);
+	if(exec( 'npm publish' ).code) {
+		console.log('ERROR, npm publish failed');	
+		process.exit(1);	
 	}
 
 });
