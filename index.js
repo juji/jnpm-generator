@@ -92,9 +92,6 @@ var pack = require(cdir+'/package.json');
 		return fs.exists(cdir+'/.git')
 		.then(function(exists){
 			if(exists) return true;
-			throw new Error();
-		})
-		.fail(function(){
 			console.log('Creating initial git repo');
 			return exec('git init')
 			.then(function(res){
@@ -103,11 +100,11 @@ var pack = require(cdir+'/package.json');
 			});
 		})
 		.then(function(res){
-			return exec('git remote show');
-		})
-		.then(function(res){
-			if(/origin/m.test(res.stdout)) return true;
-			return false;
+			return exec('git remote show')
+			.then(function(res){
+				if(/origin/m.test(res.stdout)) return true;
+				return false;
+			});
 		})
 		.then(function(origin){
 			if(origin) return true;
@@ -121,20 +118,17 @@ var pack = require(cdir+'/package.json');
 		.then(function(res){
 			return fs.exists('.gitignore')
 			.then(function(exists){
-				if(!exists) return true;
 				console.log("Writing .gitignore");
-				return fs.append('.gitignore','\nnode_modules/*');
-			})
-			.fail(function(){
-				console.log("Writing .gitignore");
-				return fs.write('.gitignore','node_modules/*');
+				if(!exists) {
+					return fs.write('.gitignore','node_modules/*\nterminal.glue');
+				}
+				return true;
 			})
 		})
 		.then(function(){
-			return exec('git rm -r ./node_modules/* --cached');
+			return exec('git rm -r ./node_modules/* --cached && git rm -r ./terminal.glue --cached');
 		})
 		.then(function(res){
-			console.log(res.stdout);
 			console.log("Run inital commit");
 			return exec('git add -A ./* && git commit -a -m "initial"');
 		}).then(function(res){

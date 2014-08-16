@@ -1,6 +1,6 @@
 {
   "name": "jnpm-generator",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "simple npm project generator",
   "main": "index.js",
   "scripts": {
@@ -27,5 +27,9 @@
     "inquirer": "^0.6.0",
     "q": "^1.0.1",
     "q-io": "^1.11.4"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "jnpm" : "index.js"
   }
 }

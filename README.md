@@ -1,5 +1,5 @@
 #jnpm-generator
-Is a simple npm project generator
+Is a simple npm project generator. Just a lazy way to start npm project.
 
 - Install selected npm dependencies
 - create README.md and add some initial content
@@ -10,8 +10,29 @@ Is a simple npm project generator
 
 ##usage
 ```bash
+jnpm
+
 jnpm init
 ```
+
+##saving to git repo
+```bash
+jnpm save
+```
+it does this:
+```bash
+git add -A ./* && git commit -a -m "saved"
+```
+
+```bash
+jnpm save "commit message"
+```
+for
+```bash
+git add -A ./* && git commit -a -m "commit message"
+```
+
+
 
 ##install
 ```bash

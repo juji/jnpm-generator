@@ -1,8 +1,0 @@
-#!/bin/bash
-
-mkdir testing
-cd testing
-node ../index.js
-cat package.json
-cd ..
-rm -rf testing
