@@ -213,9 +213,9 @@ if( test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 	console.log(' ');
 	exec('git add .');
 	exec('git commit -am "initial"');
-	if( exec('git push').code ){
-		exec('git pull');
-		exec('git push');
+	if( exec('git push origin master').code ){
+		exec('git pull origin master');
+		exec('git push origin master');
 	};
 
 	console.log(' ');

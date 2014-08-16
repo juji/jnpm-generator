@@ -116,10 +116,10 @@
 	"buffers":
 	[
 		{
-			"file": "README.md",
+			"file": "index.js",
 			"settings":
 			{
-				"buffer_size": 905,
+				"buffer_size": 1737,
 				"line_ending": "Unix"
 			}
 		}
@@ -356,18 +356,18 @@
 	},
 	"file_history":
 	[
-		"/media/yagitudeh/WORK/npm/jnpm-generator/.gitignore",
-		"/media/yagitudeh/WORK/npm/jnpm-generator/index.js",
+		"/media/yagitudeh/WORK/npm/jnpm-generator/modules/tracked.js",
+		"/media/yagitudeh/WORK/npm/jnpm-generator/README.md",
+		"/media/yagitudeh/WORK/npm/jnpm-generator/package.json",
 		"/media/yagitudeh/WORK/npm/jnpm-generator/modules/commit.js",
 		"/media/yagitudeh/WORK/npm/jnpm-generator/modules/push.js",
-		"/media/yagitudeh/WORK/npm/jnpm-generator/modules/tracked.js",
+		"/media/yagitudeh/WORK/npm/jnpm-generator/index.js",
 		"/media/yagitudeh/WORK/npm/jnpm-generator/modules/init.js",
 		"/media/yagitudeh/WORK/npm/jnpm-generator/modules/files.js",
-		"/media/yagitudeh/WORK/npm/jnpm-generator/package.json",
+		"/media/yagitudeh/WORK/npm/jnpm-generator/.gitignore",
 		"/media/yagitudeh/WORK/npm/jnpm-generator/modules/save.js",
 		"/media/yagitudeh/WORK/npm/jnpm-generator/modules/new",
 		"/media/yagitudeh/WORK/npm/jnpm-generator/test",
-		"/media/yagitudeh/WORK/npm/jnpm-generator/README.md",
 		"/media/yagitudeh/WORK/npm/jnpm-generator/terminal.glue",
 		"/home/juji/.config/sublime-text-3/Packages/User/Shell Turtlestein.sublime-settings",
 		"/home/juji/.config/sublime-text-3/Packages/Shell Turtlestein/Shell Turtlestein.sublime-settings",
@@ -501,6 +501,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"fs",
+			"nfs",
 			"pack",
 			"promised",
 			"d",
@@ -626,9 +628,7 @@
 			"p",
 			"$column",
 			"getValues",
-			"}\n",
-			"$d",
-			"clean"
+			"}\n"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -758,27 +758,28 @@
 			[
 				{
 					"buffer": 0,
-					"file": "README.md",
+					"file": "index.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 905,
+						"buffer_size": 1737,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								385,
-								385
+								303,
+								303
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 153.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

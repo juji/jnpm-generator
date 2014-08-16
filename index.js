@@ -10,7 +10,7 @@ function printHelp(){
 	console.log('		 Will initialize git and dir structure');
 	console.log('');
 	console.log('	 jnpm commit');
-	console.log('	 	 Will add and commit');
+	console.log('	 	 Will add and commit git');
 	console.log('');
 	console.log('	 jnpm push');
 	console.log('	 jnpm push "commit message"');
