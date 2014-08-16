@@ -3,7 +3,7 @@ var test = require('shelljs').test;
 var to = require('shelljs').to;
 var path = require('path');
 var inquirer = require("inquirer");
-var q = require("inquirer");
+var q = require("q");
 
 var cdir = process.cwd();
 var packFile = path.resolve(cdir+'/package.json');
