@@ -50,6 +50,8 @@ if( !test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 		console.log('You are not sure.. not doing anything..');
 		process.exit();
 	}
+
+	require('./commit.js');
 	
 	if(exec( 'npm version patch' ).code){
 		console.log('ERROR, npm version patch failed');	
