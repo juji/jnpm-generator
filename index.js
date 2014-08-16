@@ -2,7 +2,7 @@
 
 function printHelp(){
 	console.log('');
-	console.log('	 Usage');
+	console.log('	 jnpm Usage');
 	console.log('	 ==============================================');
 	console.log('');
 	console.log('	 jnpm');
@@ -25,7 +25,7 @@ function printHelp(){
 	console.log('');
 	console.log('	 jnpm help');
 	console.log("		 Print this help content");
-
+	console.log('');
 	process.exit();
 }
 
