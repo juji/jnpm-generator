@@ -31,7 +31,7 @@ if( !test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 
 		{
 			name: 'sure',
-			message	: 'This will increment version number, perform jnpm push, '+
+			message	: 'This will increment version patch number, perform jnpm push, '+
 						'and publish your work to NPM. Are you sure?',
 			type: 'confirm',
 			'default': false
@@ -46,27 +46,31 @@ if( !test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 })()
 .then(function(ok){
 
-
-if(!ok) {
-	console.log('You are not sure.. not doing anything..');
-	process.exit();
-}
-
-var v = pack.version.split('.');
-var last = (v.pop() * 1)+1;
-pack.version = v.push(last).join('.');
-if( JSON.stringify( pack, null, 2).to(packFile) ) {
-
-	console.log('Version NUmber is inceremented');
-	require('./push.js');
-	if(exec( 'npm publish' ).code) {
-		console.log('ERROR, npm publish failed');	
+	if(!ok) {
+		console.log('You are not sure.. not doing anything..');
+		process.exit();
+	}
+	
+	if(exec( 'npm version patch' ).code){
+		console.log('ERROR, npm version patch failed');	
 		process.exit(1);	
 	}
 
-}else{
-	console.log('ERROR, try to do it manually');	
-	process.exit(1);
-}
+	if( JSON.stringify( pack, null, 2).to(packFile) ) {
+
+		console.log('Version NUmber is inceremented');
+		
+		require('./push.js');
+
+		if(exec( 'npm publish' ).code) {
+			console.log('ERROR, npm publish failed');	
+			process.exit(1);	
+		}
+
+	}else{
+	
+		console.log('ERROR, try to do it manually');	
+		process.exit(1);
+	}
 
 });
