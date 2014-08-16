@@ -4,21 +4,28 @@ var fs = require('q-io/fs');
 var q = require('q');
 var nfs = require('fs');
 var async = require('async-q');
+var path = require('path');
 
+var cdir = process.cwd();
+var packFile = path.resolve(cdir+'/package.json');
+var userans = {};
 
-if(!nfs.existsSync('./package.json')){
+if(!nfs.existsSync(packFile)){
 	console.log('ERROR: you should run npm init before doing this..');
 	process.exit(1);
 }	
 
-var cdir = process.cwd();
-var pack = require(cdir+'/package.json');
+var pack = require( packFile );
+
+if(nfs.existsSync( path.resolve(cdir+'/'+pack.main ) ) ){
+	console.log('ERROR: this directory may already be initalized');
+	console.log(pack.main + ' already exists.');
+	process.exit();
+}
 
 (function(){
 
 	var d = q.defer();
-
-	console.log('NOTE: you should run npm init before doing this..')
 
 	inquirer.prompt( [
 
@@ -35,11 +42,46 @@ var pack = require(cdir+'/package.json');
 				'jade', 'dot', 'ejs', 'handlebars',
 				'jhttp-client', 'simple-cookie',
 				'mime', 'random-ua', 'encoding'
-			]
+			],
+			'default':['mocha','chai','chai-as-promised','q', 'q-io']
+		},
+		{
+			type: 'confirm',
+			name:'cli',
+			message: 'Is this cli program?',
+			'default': true
+		},
+		{
+			type: 'input',
+			name: 'cliName',
+			message:'cli command name?',
+			'default': pack.name,
+			when:function(ans){
+				return ans.cli;
+			}
+		},
+		{
+			type: 'input',
+			name: 'cliScript',
+			message:'cli script name?',
+			'default': pack.main,
+			when:function(ans){
+				return ans.cli;
+			}
+		},
+		{
+			type: 'confirm',
+			name : 'testscipt',
+			message: 'Shoul I create empty test script?',
+			'default': true,
+			when:function(ans){
+				return ans.npmpack.indexOf('mocha') > -1;
+			}
 		}
 
 	], function(ans){
 
+		userans = ans;
 		d.resolve(ans.npmpack);
 
 	});
@@ -75,11 +117,13 @@ var pack = require(cdir+'/package.json');
 .then(function(){
 
 	console.log("Writing README.md");
+	console.log(' ');
 	return fs.write('README.md', "#"+pack.name+"\n\n"+pack.description+"\n\n##install\n```javascript\nnpm install "+pack.name+"\n```");
 
 }).then(function(){
 
 	console.log('creating your main script');
+	console.log(' ');
 	var s = pack.main.replace(/\\/,'/');
 	if(!(/\//.test(pack.main))) return fs.write(pack.main,'//create by jnpm-generator');
 	s = s.split('/');
@@ -92,12 +136,41 @@ var pack = require(cdir+'/package.json');
 		f += '/';
 	};
 
-}).then(function(){
+})
+.then(function(){
 
+	if(!userans.testcript) return true;
 	console.log('creating empty test script');
+	console.log(' ');
 	return fs.makeDirectory('test')
 	.then(function(){
 		return fs.write('test/tests.js','//test script');
+	});
+
+})
+.then(function(){
+
+	if(!userans.cli) return true;
+	pack.bin = {};
+	pack.bin[ userans.cliName ] = userans.cliScript;
+	
+	console.log('preparing environment for cli command');
+	console.log(' ');
+	return fs.write( packFile, JSON.stringify(pack) )
+	.then(function(){
+
+			
+		if(mfs.existsSync( userans.cliScript )) {
+
+			console.log(userans.cliScript + ' already exists. don\'t forget to add the hashbang:');
+			console.log('#!/usr/bin/env/ node');
+			console.log(' ');
+
+		}else{
+
+			fs.write(userans.cliScript,"#!/usr/bin/env node\n\n");
+		}
+
 	});
 
 }).then(function(){
@@ -105,11 +178,15 @@ var pack = require(cdir+'/package.json');
 	if( pack.repository.type == 'git' ){
 		
 		console.log('setting-up git');
+		console.log(' ');
 
 		return fs.exists(cdir+'/.git')
 		.then(function(exists){
 			if(exists) return true;
+			
 			console.log('Creating initial git repo');
+			console.log(' ');
+
 			return exec('git init')
 			.then(function(res){
 				console.log(res.stdout);
@@ -125,7 +202,10 @@ var pack = require(cdir+'/package.json');
 		})
 		.then(function(origin){
 			if(origin) return true;
+			
 			console.log("Adding remote git as 'origin'");
+			console.log(' ');
+
 			return exec('git remote add origin '+pack.repository.url)
 			.then(function(res){
 				console.log(res.stdout);
@@ -135,7 +215,10 @@ var pack = require(cdir+'/package.json');
 		.then(function(res){
 			return fs.exists('.gitignore')
 			.then(function(exists){
+				
 				console.log("Writing .gitignore");
+				console.log(' ');
+
 				if(!exists) {
 					return fs.write('.gitignore','node_modules/*\nterminal.glue')
 					.then(function(){
@@ -149,7 +232,10 @@ var pack = require(cdir+'/package.json');
 			})
 		})
 		.then(function(res){
+			
 			console.log("Run inital commit");
+			console.log(' ');
+
 			return exec('git add .')
 			.then(function(){
 				return exec('git commit -a -m "initial"');
@@ -158,21 +244,29 @@ var pack = require(cdir+'/package.json');
 				return exec('git commit -a -m "initial"');
 			});
 		}).then(function(res){
+			
 			console.log(res.stdout);
 			console.log("Run inital push to 'origin'");
+			console.log(' ');
+
 			return exec('git push origin master')
 			.fail(function(res){
 				console.log("ERROR. Maybe, should run pull first..");
 				console.log("Pulling from 'origin'");
-				return exec('git pull origin master');
+				console.log(' ');
+
+				return exec('git pull origin master').then(function(){
+					console.log("Pushing to 'origin'");
+					console.log(' ');
+
+					return exec('git push origin master');
+				});
 			})
-			.then(function(res){
-				console.log("Pushing to 'origin'");
-				return exec('git push origin master');
-			});
+
 		}).then(function(res){
 			console.log(res.stdout);
 			console.log('DONE!');
+			console.log('');
 		});
 
 	}else{
