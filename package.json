@@ -3,9 +3,7 @@
   "version": "0.0.4",
   "description": "simple npm project generator",
   "main": "index.js",
-  "scripts": {
-    "install": "npm install"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git@github.com:juji/jnpm-generator.git"
@@ -21,15 +19,16 @@
     "url": "https://github.com/juji/jnpm-generator/issues"
   },
   "homepage": "https://github.com/juji/jnpm-generator",
-  "devDependencies": {
+  "devDependencies": {},
+  "preferGlobal": "true",
+  "bin": {
+    "jnpm": "index.js"
+  },
+  "dependencies":{
     "async-q": "^0.2.2",
     "child-process-promise": "^0.2.0-SNAPSHOT.1389671754086",
     "inquirer": "^0.6.0",
     "q": "^1.0.1",
     "q-io": "^1.11.4"
-  },
-  "preferGlobal": "true",
-  "bin": {
-    "jnpm" : "index.js"
   }
 }
