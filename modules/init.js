@@ -16,19 +16,19 @@ var userans = {};
 
 var log = {
 	error : function(str){
-		console.log( chalk.bgRed.white(' ERROR: '+str+' ') );
+		console.log( chalk.bgRed.black(' ERROR: '+str+' ') );
 	},
 	progress: function(str){
-		console.log( chalk.bgBlue.white(' '+str+' ') );
+		console.log( chalk.bgBlue.black(' '+str+' ') );
 	},
 	note: function(str){
 		console.log( chalk.bgWhite.black(' NOTE: '+str+' ') );
 	},
 	warn: function(str){
-		console.log( chalk.bgYellow.white(' WARN: '+str+' ') );
+		console.log( chalk.bgYellow.black(' WARN: '+str+' ') );
 	},
 	ok: function(str){
-		console.log( chalk.bgGreen.white(' '+str+' ') );
+		console.log( chalk.bgGreen.black(' '+str+' ') );
 	}
 };
 
