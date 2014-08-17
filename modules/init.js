@@ -19,7 +19,7 @@ var log = {
 		console.log( chalk.bgRed.black(' ERROR: '+str+' ') );
 	},
 	progress: function(str){
-		console.log( chalk.bgBlue.black(' '+str+' ') );
+		console.log( chalk.bgBlue.white(' '+str+' ') );
 	},
 	note: function(str){
 		console.log( chalk.bgWhite.black(' NOTE: '+str+' ') );
@@ -51,7 +51,7 @@ if( test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 if( 
 	typeof pack.repository != 'undefined' &&
 	typeof pack.repository.type != 'undefined' &&
-	typeof pack.repository.type == 'git'
+	pack.repository.type == 'git'
  ){
 
 	//initialize
@@ -176,7 +176,8 @@ if(
 .then(function(){
 
 	log.progress("Writing README.md..");
-	return ("#"+pack.name+"\n\n"+pack.description+
+	var desc = typeof pack.description != 'undefined' ? pack.description : '';
+	return ("#"+pack.name+"\n\n"+desc+
 			"\n\n##install\n```javascript\nnpm install "+
 			pack.name+"\n```").to('README.md');
 
