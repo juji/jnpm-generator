@@ -5,7 +5,6 @@ function printHelp(){
 	console.log('	 jnpm Usage');
 	console.log('	 ==============================================');
 	console.log('');
-	console.log('	 jnpm');
 	console.log('	 jnpm init');
 	console.log('		 Will initialize git and dir structure');
 	console.log('');
@@ -45,7 +44,11 @@ if(!shell.which('npm')){
 	process.exit();
 }
 
-if(process.argv.length==2 || process.argv[2]=='init'){
+if(process.argv.length==2){
+
+	printHelp();	
+
+}else if(process.argv[2]=='init'){
 
 	require('./modules/init.js');
 

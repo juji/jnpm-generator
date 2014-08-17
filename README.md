@@ -11,7 +11,6 @@ Is a simple npm project generator. Just a lazy way to start npm project.
 
 ##usage
 ```bash
-jnpm  # or 
 jnpm init
 
 # install npm modules
