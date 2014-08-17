@@ -181,6 +181,18 @@ if( test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 
 }).then(function(){
 
+	if( typeof pack.repository == 'undefined'){
+		console.log('Repo is not git. not doing anything..');
+		console.log('DONE!');
+		return true;
+	}
+
+	if( typeof pack.repository.type == 'undefined'){
+		console.log('Repo is not git. not doing anything..');
+		console.log('DONE!');
+		return true;
+	}	
+
 	if( pack.repository.type != 'git' ){
 		console.log('Repo is not git. not doing anything..');
 		console.log('DONE!');
