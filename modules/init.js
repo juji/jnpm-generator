@@ -81,7 +81,7 @@ if(
 
 }else{
 
-	note.warn('Your repo is not a git. This thing works with git..');
+	log.warn('Your repo is not a git. This thing works with git..');
 
 }
 
