@@ -8,12 +8,32 @@ var toEnd = require('shelljs').toEnd;
 var test = require('shelljs').test;
 var mkdir = require('shelljs').mkdir;
 
+var chalk = require('chalk');
+
 var cdir = process.cwd();
 var packFile = path.resolve(cdir+'/package.json');
 var userans = {};
 
+var log = {
+	error : function(str){
+		console.log( chalk.bgRed.white(' ERROR: '+str+' ') );
+	},
+	progress: function(str){
+		console.log( chalk.bgBlue.white(' '+str+' ') );
+	},
+	note: function(str){
+		console.log( chalk.bgWhite.black(' NOTE: '+str+' ') );
+	},
+	warn: function(str){
+		console.log( chalk.bgYellow.white(' WARN: '+str+' ') );
+	},
+	ok: function(str){
+		console.log( chalk.bgGreen.white(' '+str+' ') );
+	}
+};
+
 if( !test('-f', packFile) ){
-	console.log('ERROR: you should run npm init before doing this..');
+	log.error('you should run npm init before doing this..');
 	process.exit(1);
 }	
 
@@ -21,11 +41,50 @@ var pack = require( packFile );
 
 if( test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 
-	console.log('ERROR: this directory may already be initalized');
-	console.log(pack.main + ' already exists.');
-	process.exit();
+	log.error(pack.main + ' already exists.');
+	log.error('this directory may already been initalized');
+	process.exit(1);
 
 }
+
+//initialize with git lookup
+if( 
+	typeof pack.repository != 'undefined' &&
+	typeof pack.repository.type != 'undefined' &&
+	typeof pack.repository.type == 'git'
+ ){
+
+	//initialize
+	if(!test('-d',cdir+'/.git')){
+		log.progress('initializing git repo..');
+		exec('git init');
+	}
+
+	//add remote
+	var repo = exec('git remote show',{silent:true}).output;
+	if(!(/origin/m.test(repo))) {
+		log.progress("adding "+pack.repository.url+" as 'origin'");
+		exec('git remote add origin '+pack.repository.url);
+	}else{
+		log.note("The 'origin' remote has been set. will not add remote url");
+	}
+
+	log.progress('checking remote repo..');
+	var remote = exec('git ls-remote').output.split("\n");
+	remote.shift();
+	if(remote.length){
+
+		log.error('Your remote is not empty. You should do this manually..');
+		process.exit(1);
+
+	}
+
+}else{
+
+	note.warn('Your repo is not a git. This thing works with git..');
+
+}
+
 
 (function(){
 
@@ -96,6 +155,7 @@ if( test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 })()
 .then(function(installs){
 
+	log.progress('Installing NPM modules..');
 	var functions = [];
 	for(var i in installs){
 		(function(){
@@ -115,16 +175,14 @@ if( test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 })
 .then(function(){
 
-	console.log("Writing README.md");
-	console.log(' ');
+	log.progress("Writing README.md..");
 	return ("#"+pack.name+"\n\n"+pack.description+
 			"\n\n##install\n```javascript\nnpm install "+
 			pack.name+"\n```").to('README.md');
 
 }).then(function(){
 
-	console.log('creating your main script');
-	console.log(' ');
+	log.progress('creating your main script..');
 	var s = pack.main.replace(/\\/,'/');
 
 	if(!(/\//.test(pack.main))) {
@@ -144,8 +202,7 @@ if( test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 
 	if(!userans.testcript) return true;
 
-	console.log('creating empty test script');
-	console.log(' ');
+	log.progress('creating empty test script');
 
 	mkdir('test');
 	'//test script'.to('test/tests.js');
@@ -160,8 +217,7 @@ if( test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 	pack.bin = {};
 	pack.bin[ userans.cliName ] = userans.cliScript;
 	
-	console.log('preparing environment for cli command');
-	console.log(' ');
+	log.progress('preparing package.json for cli..');
 
 	JSON.stringify( pack, null, 2 ).to( packFile );
 
@@ -170,47 +226,27 @@ if( test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 		!test('-f', userans.cliScript)) {
 		'#!/usr/bin/env/ node'.to(userans.cliScript);
 	}else{
-
-		console.log(userans.cliScript + ' already Exists. don\'t forget to add the hashbang:');
-		console.log('#!/usr/bin/env/ node');
-		console.log(' ');
-
+		console.log('');
+		log.note(userans.cliScript + ' already Exists. will not do anything to the file.');
+		log.note('Don\'t forget to add the hashbang: #!/usr/bin/env/ node');
+		console.log('');
 	}
 
 	return true;
 
 }).then(function(){
 
-	if( typeof pack.repository == 'undefined'){
-		console.log('Repo is not git. not doing anything..');
-		console.log('DONE!');
-		return true;
-	}
-
-	if( typeof pack.repository.type == 'undefined'){
-		console.log('Repo is not git. not doing anything..');
-		console.log('DONE!');
-		return true;
-	}	
-
-	if( pack.repository.type != 'git' ){
-		console.log('Repo is not git. not doing anything..');
-		console.log('DONE!');
-
+	if( 
+		typeof pack.repository == 'undefined' || 
+		typeof pack.repository.type == 'undefined' || 
+		pack.repository.type != 'git'
+	){
+		log.note('Repo is not git. not doing anything..');
+		log.ok('i\'m done..');
 		return true;
 	}
 		
-	console.log('setting-up git');
-	console.log(' ');
-
-	//initialize
-	if(!test('-d',cdir+'/.git')){
-		exec('git init');
-	}
-
-	//add remote
-	var repo = exec('git remote show',{silent:true}).output;
-	if(!(/origin/m.test(repo))) exec('git remote add origin '+pack.repository.url);
+	log.progress('setting-up local repo..');
 
 	//add .gitignore
 	'node_modules/*\nterminal.glue'.to('.gitignore');
@@ -220,21 +256,24 @@ if( test( '-f',  path.resolve(cdir+'/'+pack.main ) ) ){
 
 
 	//add, commit and push
-	console.log("Run inital commit and push");
-	console.log(' ');
+	log.progress("Run inital commit and push");
 	exec('git add .');
 	exec('git commit -am "initial"');
 	if( exec('git push origin master').code ){
-		exec('git pull origin master');
-		exec('git push origin master');
+		log.progress('OK, pulling from remote repo..');
+		if( !exec('git pull origin master').code ){
+			exec('git push origin master');
+		}else{
+			log.error('Looks like the pulled data can not be merged..');
+			log.note('You have to resolve this manually');
+		};
 	};
 
-	console.log(' ');
-	console.log('DONE!');
+	log.ok('i\'m done..');
 
 }).fail(function(e){
 
-	console.log('ERROR');
+	log.error('ERROR');
 	console.log(e);
 
 });
