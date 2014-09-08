@@ -215,17 +215,18 @@ if(
 
 	if(!userans.cli) return true;
 
-	pack.bin = {};
-	pack.bin[ userans.cliName ] = userans.cliScript;
+	var pack2 = require( packFile );
+	pack2.bin = {};
+	pack2.bin[ userans.cliName ] = userans.cliScript;
 	
 	log.progress('preparing package.json for cli..');
 
-	JSON.stringify( pack, null, 2 ).to( packFile );
+	JSON.stringify( pack2, null, 2 ).to( packFile );
 
 	if(
 		(test('-f', userans.cliScript) && userans.cliScript == pack.main) || 
 		!test('-f', userans.cliScript)) {
-		'#!/usr/bin/env/ node'.to(userans.cliScript);
+		"#!/usr/bin/env/ node\n\n".to(userans.cliScript);
 	}else{
 		console.log('');
 		log.note(userans.cliScript + ' already Exists. will not do anything to the file.');

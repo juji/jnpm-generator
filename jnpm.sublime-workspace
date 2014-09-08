@@ -135,7 +135,7 @@
 			"file": "modules/init.js",
 			"settings":
 			{
-				"buffer_size": 6131,
+				"buffer_size": 6145,
 				"line_ending": "Unix"
 			}
 		},
@@ -809,7 +809,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -825,8 +825,8 @@
 						"selection":
 						[
 							[
-								311,
-								311
+								1242,
+								1242
 							]
 						],
 						"settings":
@@ -834,11 +834,11 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": -0.0,
-						"translation.y": 0.0,
+						"translation.x": 0.0,
+						"translation.y": 680.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -866,7 +866,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -875,15 +875,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6131,
+						"buffer_size": 6145,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1139,
-								1139
+								1637,
+								1637
 							]
 						],
 						"settings":
@@ -892,10 +892,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 714.0,
+						"translation.y": 1136.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -1007,7 +1007,7 @@
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": -0.0,
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
