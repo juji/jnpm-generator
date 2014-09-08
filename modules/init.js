@@ -98,9 +98,9 @@ if(
 			type: 'checkbox',
 			choices : [
 				'mocha', 'chai', 'mocha-as-promised', 'chai-as-promised', 
-				'grunt', 'bower', 'shelljs', 'chalk', 'commander', 
-				'async','q', 'q-io', 'async-q', 'child-process-promise',
-				'express', 'redis','memcached', 'sqlite3', 'mongodb',
+				'grunt', 'bower', 'shelljs', 'chalk', 'commander', 'node-getopt',
+				'async','q', 'q-io', 'async-q', 
+				'express', 'redis','memcached', 'sqlite3', 'mongodb', 'mysql',
 				'cheerio','underscore', 'lodash',
 				'jade', 'dot', 'ejs', 'handlebars',
 				'jhttp-client', 'simple-cookie',
