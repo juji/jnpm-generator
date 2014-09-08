@@ -71,8 +71,8 @@ if(
 
 	log.progress('checking remote repo..');
 	var remote = exec('git ls-remote').output.split("\n");
-	remote.shift();
-	if(remote.length){
+	remote.shift();	
+	if(remote.length && remote[0]){
 
 		log.error('Your remote is not empty. You should do this manually..');
 		process.exit(1);
