@@ -135,7 +135,7 @@
 			"file": "modules/init.js",
 			"settings":
 			{
-				"buffer_size": 6145,
+				"buffer_size": 6210,
 				"line_ending": "Unix"
 			}
 		},
@@ -825,8 +825,8 @@
 						"selection":
 						[
 							[
-								1242,
-								1242
+								1196,
+								1196
 							]
 						],
 						"settings":
@@ -838,7 +838,7 @@
 						"translation.y": 680.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -866,7 +866,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -875,15 +875,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6145,
+						"buffer_size": 6210,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1637,
-								1637
+								2038,
+								2038
 							]
 						],
 						"settings":
@@ -892,7 +892,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1136.0,
+						"translation.y": 1428.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -997,8 +997,8 @@
 						"selection":
 						[
 							[
-								164,
-								164
+								52,
+								52
 							]
 						],
 						"settings":
@@ -1011,7 +1011,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
