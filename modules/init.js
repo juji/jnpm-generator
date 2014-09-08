@@ -215,13 +215,14 @@ if(
 
 	if(!userans.cli) return true;
 
-	var pack2 = require( packFile );
-	pack2.bin = {};
-	pack2.bin[ userans.cliName ] = userans.cliScript;
+	delete require.cache[packFile];
+	pack = require( packFile );
+	pack.bin = {};
+	pack.bin[ userans.cliName ] = userans.cliScript;
 	
 	log.progress('preparing package.json for cli..');
 
-	JSON.stringify( pack2, null, 2 ).to( packFile );
+	JSON.stringify( pack, null, 2 ).to( packFile );
 
 	if(
 		(test('-f', userans.cliScript) && userans.cliScript == pack.main) || 
