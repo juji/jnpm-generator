@@ -262,7 +262,7 @@ if(
 	log.progress("Run inital commit and push");
 	exec('git add .');
 	exec('git commit -am "initial"');
-	if( exec('git push origin master').code ){
+	if( exec('git push --set-upstream origin master').code ){
 		log.progress('OK, pulling from remote repo..');
 		if( !exec('git pull origin master').code ){
 			exec('git push origin master');
